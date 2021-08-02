@@ -13,6 +13,7 @@ The purpose of this website is to display the current weather and pollution of a
 
 API: http://api.airvisual.com/v2/city?city=Los Angeles&state=California&country=USA&key=cd2b6222-cf90-4e64-b633-836b11dc5b70
 Sample JSON: 
+```javascript
     {
     "status": "success",
     "data": {
@@ -46,11 +47,11 @@ Sample JSON:
         }
     }
 }
-
+```
 
 ## Wireframes
 
-https://wireframe.cc/pro/pp/d764aed05461434
+![wireframe](https://wireframe.cc/pro/pp/d764aed05461434)
 
 
 ### MVP/PostMVP
@@ -85,7 +86,7 @@ https://wireframe.cc/pro/pp/d764aed05461434
 
 ## Priority Matrix
 
-https://whimsical.com/getting-started-SUyZuEWdKanmkWpW4uq5Yy
+![Priority Matrix](https://whimsical.com/getting-started-SUyZuEWdKanmkWpW4uq5Yy)
 
 
 ## Timeframes
