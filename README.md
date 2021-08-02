@@ -51,13 +51,12 @@ Sample JSON:
 
 ## Wireframes
 
-![wireframe](https://wireframe.cc/pro/pp/d764aed05461434)
+![Wireframe](https://wireframe.cc/pro/pp/d764aed05461434)
 
 
 ### MVP/PostMVP
 
 #### MVP 
-*These are examples only. Replace with your own MVP features.*
 
 - Create three dynamic dropdown menus for Country, State, City queries.
 - Make request from Country API to get Countries supported by IQAir and convert response to the dropdown Country menu
@@ -67,10 +66,12 @@ Sample JSON:
 - Render the weather/pollution data of the Specified City on the page
 - Implement flexbox to organize the contents and to improve the presentation of the page 
 
+
 #### PostMVP  
 
 - Implement the hover feature on the data fields on the web page that will describe each data field in depth so that more users are able to understand the information more clearly
 - Add a feature for the user to bookmark certain cities so that they may refer to these cities in a bookmarked list of cities for fast 
+- Data visualization
 
 
 ## Project Schedule
