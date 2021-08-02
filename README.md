@@ -74,10 +74,6 @@ https://wireframe.cc/pro/pp/d764aed05461434
 
 ## Project Schedule
 
-This schedule will be used to keep track of your progress throughout the week and align with our expectations.  
-
-You are **responsible** for scheduling time with your squad to seek approval for each deliverable by the end of the corresponding day, excluding `Saturday` and `Sunday`.
-
 |  Day | Deliverable | Status
 |---|---| ---|
 |July 30| Prompt / Wireframes / Priority Matrix / Timeframes | Incomplete
