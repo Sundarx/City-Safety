@@ -15,7 +15,7 @@ const cityTag = document.querySelector('#select-city')
 
 getAllCountries()
 
-// function location(){//city, state, country) {
+// function location() {
 //   this.city = ""
 //   this.state = ""
 //   this.country = ""
@@ -50,18 +50,15 @@ function setCountryTags(list) {
     // optionTag.append(optionTag)
   })
 
-  // getAllStates(optionTag.textContent)
   // when user selects country input, it should generate a respective state dropdown menu
   form.addEventListener('input', getSelectedCountry)
-  // getCountryData(optionTag.textContent)
-
 }
 
 // return selected country as input to state API request
 function getSelectedCountry(e) {
   e.preventDefault()
   const countryName = countryTag.value
-  currentLoc.country = countryName
+  // currentLoc.country = countryName
   getAllStates(countryName)
   return countryName
 }
@@ -83,24 +80,20 @@ async function getAllStates(countryName) {
   }
 }
 
-// convert all states into option tags in country dropdown menu
+// convert all states into option tags in state dropdown menu
 function setStateTags(statesList) {
   // remove previous state options
   // removeStates()
-  // removeCities()
+
   statesList.forEach((element) => {
     const optionTag = document.createElement('option')
     // console.log(element.state)
     optionTag.value = element.state
     optionTag.textContent = element.state
     stateTag.append(optionTag)
-
-    // getAllStates(optionTag.textContent)
   })
 
   form.addEventListener('input', getSelectedState)
-  // stateTag.value = form.addEventListener('input', getSelectedState)
-
 
 }
 
@@ -111,20 +104,19 @@ function removeStates() {
   }
 }
 
+// return selected state and country as input to city API request
 function getSelectedState(e) {
-  removeStates()
   e.preventDefault()
   const stateName = stateTag.value
   const countryName = countryTag.value
   // console.log(stateName)
   // console.log(countryTag.value)
-  currentLoc.state = stateName
+  // currentLoc.state = stateName
   getAllCities(stateName, countryName)
   return stateName
-  // removeStates()
-
 }
 
+// get all supported cities from API according to selected state and country
 async function getAllCities(stateName, countryName) {
   try {
     const allCitiesURL = `http://api.airvisual.com/v2/cities?state=${stateName}&country=${countryName}&key=${API_KEY}`
@@ -138,9 +130,10 @@ async function getAllCities(stateName, countryName) {
   }
 }
 
+// convert all cities into option tags in city dropdown menu
 function setCityTags(citiesList, stateName, countryName) {
   // remove previous list of cities
-  removeCities()
+  // removeCities()
 
   citiesList.forEach((element) => {
     const optionTag = document.createElement('option')
@@ -154,13 +147,14 @@ function setCityTags(citiesList, stateName, countryName) {
 
 }
 
+// removes cities in HTML cities container
 function removeCities() {
   while (cityTag.lastChild) {
     cityTag.removeChild(cityTag.lastChild)
   }
 }
 
-
+// return selected city, state, country as input to pollution API request
 function getSelectedCity(e) {
   e.preventDefault()
   const cityName = cityTag.value
@@ -168,11 +162,9 @@ function getSelectedCity(e) {
   const countryName = countryTag.value
 
   // getData(cityName, stateName, countryName)
-  currentLoc.city = cityName
+  // currentLoc.city = cityName
   console.log(cityName, stateName, countryName)
 
   return cityName
 }
-
-
 
