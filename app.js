@@ -15,22 +15,12 @@ const cityTag = document.querySelector('#select-city')
 
 getAllCountries()
 
-// function location() {
-//   this.city = ""
-//   this.state = ""
-//   this.country = ""
-// }
-
-// let currentLoc = new location()
-
 // get all supported countries from API
 async function getAllCountries() {
   try {
     const allCountriesURL = `http://api.airvisual.com/v2/countries?key=${API_KEY}`
     const response = await axios.get(allCountriesURL)
-    // console.log(response.data.data)
     const countriesList = response.data.data
-    // console.log(countriesList)
 
     setCountryTags(countriesList)
   }
@@ -43,36 +33,30 @@ async function getAllCountries() {
 function setCountryTags(list) {
   list.forEach((element) => {
     const optionTag = document.createElement('option')
-    // console.log(element.country)
     optionTag.value = element.country
     optionTag.textContent = element.country
     countryTag.append(optionTag)
-    // optionTag.append(optionTag)
   })
 
   // when user selects country input, it should generate a respective state dropdown menu
-  form.addEventListener('input', getSelectedCountry)
+  countryTag.addEventListener('change', getSelectedCountry)
 }
 
 // return selected country as input to state API request
 function getSelectedCountry(e) {
   e.preventDefault()
-  // const countryName = countryTag.value
-  // currentLoc.country = countryName
-  // getAllStates(countryTag.value)
+  removeCities() // NOTE - need to remove cities if new Country is selected
   getAllStates()
   return countryTag.value
 }
 
 
 // get all supported states from API according to selected country
-async function getAllStates(){//(countryName) {
+async function getAllStates(){
   try {
     const allStatesURL = `http://api.airvisual.com/v2/states?country=${countryTag.value}&key=${API_KEY}`
     const response = await axios.get(allStatesURL)
-    // console.log(response.data.data)
     const statesList = response.data.data
-    // console.log(countriesList)
 
     setStateTags(statesList)
   }
@@ -83,18 +67,16 @@ async function getAllStates(){//(countryName) {
 
 // convert all states into option tags in state dropdown menu
 function setStateTags(statesList) {
-  // remove previous state options
-  // removeStates()
+  removeStates()
 
   statesList.forEach((element) => {
     const optionTag = document.createElement('option')
-    // console.log(element.state)
     optionTag.value = element.state
     optionTag.textContent = element.state
     stateTag.append(optionTag)
   })
 
-  form.addEventListener('input', getSelectedState)
+  stateTag.addEventListener('change', getSelectedState)
 
 }
 
@@ -103,29 +85,25 @@ function removeStates() {
   while (stateTag.lastChild) {
     stateTag.removeChild(stateTag.lastChild)
   }
+
+  const stateData = '<option disabled selected>Select a State/Region</option>'
+  stateTag.insertAdjacentHTML("beforeend", stateData)
 }
 
 // return selected state and country as input to city API request
 function getSelectedState(e) {
   e.preventDefault()
-  // const stateName = stateTag.value
-  // const countryName = countryTag.value
-  // console.log(stateName)
-  // console.log(countryTag.value)
-  // currentLoc.state = stateName
-  // getAllCities(stateTag.value, countryTag.value)
   getAllCities()
   return stateTag.value
 }
 
 // get all supported cities from API according to selected state and country
-async function getAllCities(){//(stateName, countryName) {
+async function getAllCities(){
   try {
     const allCitiesURL = `http://api.airvisual.com/v2/cities?state=${stateTag.value}&country=${countryTag.value}&key=${API_KEY}`
     const response = await axios.get(allCitiesURL)
-    // console.log(response.data.data)
     const citiesList = response.data.data
-    setCityTags(citiesList)//, stateName, countryName)
+    setCityTags(citiesList)
   }
   catch (err) {
     console.error(err)
@@ -133,19 +111,17 @@ async function getAllCities(){//(stateName, countryName) {
 }
 
 // convert all cities into option tags in city dropdown menu
-function setCityTags(citiesList){//, stateName, countryName) {
-  // remove previous list of cities
-  // removeCities()
+function setCityTags(citiesList){
+  removeCities();
 
   citiesList.forEach((element) => {
     const optionTag = document.createElement('option')
-    // console.log(element.city)
     optionTag.value = element.city
     optionTag.textContent = element.city
     cityTag.append(optionTag)
   })
 
-  form.addEventListener('input', getSelectedCity)
+  cityTag.addEventListener('change', getSelectedCity)
 
 }
 
@@ -154,23 +130,15 @@ function removeCities() {
   while (cityTag.lastChild) {
     cityTag.removeChild(cityTag.lastChild)
   }
+
+  const cityData = '<option disabled selected>Select a City</option>'
+  cityTag.insertAdjacentHTML("beforeend", cityData)
 }
 
 // return selected city, state, country as input to pollution API request
 function getSelectedCity(e) {
   e.preventDefault()
-  // const cityName = cityTag.value
-  // const stateName = stateTag.value
-  // const countryName = countryTag.value
-
-  // getData(cityName, stateName, countryName)
-  // currentLoc.city = cityName
-  // console.log(cityName, stateName, countryName)
-
-  // getPollutionData(cityName, stateName, countryName)
-
   form.addEventListener('submit', getPollutionData)
-
   return cityTag.value
 }
 
@@ -179,7 +147,6 @@ async function getPollutionData(e){//cityName, stateName, countryName) {
     e.preventDefault()
     const pollutionURL = `http://api.airvisual.com/v2/city?city=${cityTag.value}&state=${stateTag.value}&country=${countryTag.value}&key=${API_KEY}`
     const response = await axios.get(pollutionURL)
-    // console.log(response.data.data)
     let cityPollutionData = response.data.data
     setPollutionData(cityPollutionData)
   }
@@ -199,12 +166,17 @@ function setPollutionData(cityPollutionData) {
   console.log(cityPollutionData.current.weather.ts)
   console.log(cityPollutionData.current.pollution)
 
-  document.querySelector("#location").textContent += `${cityPollutionData.city}, ${cityPollutionData.state}, ${cityPollutionData.country}`
+  removeData()
+
+  document.querySelector("#location").textContent += `
+    Location: ${cityPollutionData.city}, 
+    ${cityPollutionData.state}, 
+    ${cityPollutionData.country}
+  `
 
   const weather = cityPollutionData.current.weather
 
   const weatherTag = document.createElement('p')
-  // document.querySelector("#weather-data").append(weatherTag)
   weatherTagHTML = `
     <h4>Weather</h4>
     Timestamp: ${weather.ts}
@@ -244,4 +216,16 @@ function setPollutionData(cityPollutionData) {
 
   document.querySelector("#pollution-data").insertAdjacentHTML('beforeend', pollutionTagHTML)
 
+}
+
+function removeData() {
+  while (document.querySelector("#location").lastChild) {
+    document.querySelector("#location").removeChild(document.querySelector("#location").lastChild)
+  }
+  while (document.querySelector("#weather-data").lastChild) {
+    document.querySelector("#weather-data").removeChild(document.querySelector("#weather-data").lastChild)
+  }
+  while (document.querySelector("#pollution-data").lastChild) {
+    document.querySelector("#pollution-data").removeChild(document.querySelector("#pollution-data").lastChild)
+  }
 }
