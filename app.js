@@ -199,11 +199,14 @@ function setPollutionData(cityPollutionData) {
   console.log(cityPollutionData.current.weather.ts)
   console.log(cityPollutionData.current.pollution)
 
+  document.querySelector("#location").textContent += `${cityPollutionData.city}, ${cityPollutionData.state}, ${cityPollutionData.country}`
+
   const weather = cityPollutionData.current.weather
 
   const weatherTag = document.createElement('p')
   // document.querySelector("#weather-data").append(weatherTag)
   weatherTagHTML = `
+    <h4>Weather</h4>
     Timestamp: ${weather.ts}
     <br>
     Temperature: ${weather.tp} \u00B0C / ${Number(weather.tp)*1.8 + 32} \u00B0F
@@ -218,5 +221,27 @@ function setPollutionData(cityPollutionData) {
     <br>
   `
   // <img src="${weather.ic}.png"/>
-  document.querySelector("#weather-data").insertAdjacentHTML('beforeend', weatherTagHTML )
+  document.querySelector("#weather-data").insertAdjacentHTML('beforeend', weatherTagHTML)
+
+
+  const pollution = cityPollutionData.current.pollution
+
+  const pollutionTag = document.createElement('p')
+
+  pollutionTagHTML = `
+    <h4>Pollution</h4>
+    Timestamp: ${pollution.ts}
+    <br>
+    AQI Value (US EPA Std): ${pollution.aqius}
+    <br>
+    Main Pollutant for US AQI: ${pollution.mainus}
+    <br>
+    AQI Value (China EPA Std): ${pollution.aqicn}
+    <br>
+    Main Pollutant for China AQI: ${pollution.maincn}
+    <br>
+  `
+
+  document.querySelector("#pollution-data").insertAdjacentHTML('beforeend', pollutionTagHTML)
+
 }
