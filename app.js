@@ -57,17 +57,18 @@ function setCountryTags(list) {
 // return selected country as input to state API request
 function getSelectedCountry(e) {
   e.preventDefault()
-  const countryName = countryTag.value
+  // const countryName = countryTag.value
   // currentLoc.country = countryName
-  getAllStates(countryName)
-  return countryName
+  // getAllStates(countryTag.value)
+  getAllStates()
+  return countryTag.value
 }
 
 
 // get all supported states from API according to selected country
-async function getAllStates(countryName) {
+async function getAllStates(){//(countryName) {
   try {
-    const allStatesURL = `http://api.airvisual.com/v2/states?country=${countryName}&key=${API_KEY}`
+    const allStatesURL = `http://api.airvisual.com/v2/states?country=${countryTag.value}&key=${API_KEY}`
     const response = await axios.get(allStatesURL)
     // console.log(response.data.data)
     const statesList = response.data.data
@@ -107,23 +108,24 @@ function removeStates() {
 // return selected state and country as input to city API request
 function getSelectedState(e) {
   e.preventDefault()
-  const stateName = stateTag.value
-  const countryName = countryTag.value
+  // const stateName = stateTag.value
+  // const countryName = countryTag.value
   // console.log(stateName)
   // console.log(countryTag.value)
   // currentLoc.state = stateName
-  getAllCities(stateName, countryName)
-  return stateName
+  // getAllCities(stateTag.value, countryTag.value)
+  getAllCities()
+  return stateTag.value
 }
 
 // get all supported cities from API according to selected state and country
-async function getAllCities(stateName, countryName) {
+async function getAllCities(){//(stateName, countryName) {
   try {
-    const allCitiesURL = `http://api.airvisual.com/v2/cities?state=${stateName}&country=${countryName}&key=${API_KEY}`
+    const allCitiesURL = `http://api.airvisual.com/v2/cities?state=${stateTag.value}&country=${countryTag.value}&key=${API_KEY}`
     const response = await axios.get(allCitiesURL)
     // console.log(response.data.data)
     const citiesList = response.data.data
-    setCityTags(citiesList, stateName, countryName)
+    setCityTags(citiesList)//, stateName, countryName)
   }
   catch (err) {
     console.error(err)
@@ -131,7 +133,7 @@ async function getAllCities(stateName, countryName) {
 }
 
 // convert all cities into option tags in city dropdown menu
-function setCityTags(citiesList, stateName, countryName) {
+function setCityTags(citiesList){//, stateName, countryName) {
   // remove previous list of cities
   // removeCities()
 
@@ -157,14 +159,64 @@ function removeCities() {
 // return selected city, state, country as input to pollution API request
 function getSelectedCity(e) {
   e.preventDefault()
-  const cityName = cityTag.value
-  const stateName = stateTag.value
-  const countryName = countryTag.value
+  // const cityName = cityTag.value
+  // const stateName = stateTag.value
+  // const countryName = countryTag.value
 
   // getData(cityName, stateName, countryName)
   // currentLoc.city = cityName
-  console.log(cityName, stateName, countryName)
+  // console.log(cityName, stateName, countryName)
 
-  return cityName
+  // getPollutionData(cityName, stateName, countryName)
+
+  form.addEventListener('submit', getPollutionData)
+
+  return cityTag.value
 }
 
+async function getPollutionData(e){//cityName, stateName, countryName) {
+  try {
+    e.preventDefault()
+    const pollutionURL = `http://api.airvisual.com/v2/city?city=${cityTag.value}&state=${stateTag.value}&country=${countryTag.value}&key=${API_KEY}`
+    const response = await axios.get(pollutionURL)
+    // console.log(response.data.data)
+    let cityPollutionData = response.data.data
+    setPollutionData(cityPollutionData)
+  }
+  catch (err) {
+    console.error(err)
+  }
+
+}
+
+
+function setPollutionData(cityPollutionData) {
+  console.log(cityPollutionData.city)
+  console.log(cityPollutionData.state)
+  console.log(cityPollutionData.country)
+  console.log(cityPollutionData.current)
+  console.log(cityPollutionData.current.weather)
+  console.log(cityPollutionData.current.weather.ts)
+  console.log(cityPollutionData.current.pollution)
+
+  const weather = cityPollutionData.current.weather
+
+  const weatherTag = document.createElement('p')
+  // document.querySelector("#weather-data").append(weatherTag)
+  weatherTagHTML = `
+    Timestamp: ${weather.ts}
+    <br>
+    Temperature: ${weather.tp} \u00B0C / ${Number(weather.tp)*1.8 + 32} \u00B0F
+    <br>
+    Atmospheric Pressure: ${weather.pr} hPa
+    <br>
+    Humidity: ${weather.hu}%
+    <br>
+    Wind Speed: ${weather.ws} m/s
+    <br>
+    Wind Direction: ${weather.wd}\u00B0
+    <br>
+  `
+  // <img src="${weather.ic}.png"/>
+  document.querySelector("#weather-data").insertAdjacentHTML('beforeend', weatherTagHTML )
+}
