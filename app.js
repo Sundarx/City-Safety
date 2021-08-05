@@ -158,14 +158,6 @@ async function getPollutionData(e){//cityName, stateName, countryName) {
 
 
 function setPollutionData(cityPollutionData) {
-  console.log(cityPollutionData.city)
-  console.log(cityPollutionData.state)
-  console.log(cityPollutionData.country)
-  console.log(cityPollutionData.current)
-  console.log(cityPollutionData.current.weather)
-  console.log(cityPollutionData.current.weather.ts)
-  console.log(cityPollutionData.current.pollution)
-
   removeData()
 
   document.querySelector("#location").textContent += `
@@ -175,7 +167,6 @@ function setPollutionData(cityPollutionData) {
   `
 
   const weather = cityPollutionData.current.weather
-
   const weatherTag = document.createElement('p')
   weatherTagHTML = `
     <h4>Weather</h4>
@@ -192,14 +183,15 @@ function setPollutionData(cityPollutionData) {
     Wind Direction: ${weather.wd}\u00B0
     <br>
   `
-  // <img src="${weather.ic}.png"/>
   document.querySelector("#weather-data").insertAdjacentHTML('beforeend', weatherTagHTML)
 
 
+  weatherIconHTML = `<img src="https://airvisual.com/images/${weather.ic}.png">`
+  document.querySelector("#weather-icon").insertAdjacentHTML('beforeend', weatherIconHTML)
+
+
   const pollution = cityPollutionData.current.pollution
-
   const pollutionTag = document.createElement('p')
-
   pollutionTagHTML = `
     <h4>Pollution</h4>
     Timestamp: ${pollution.ts}
@@ -213,7 +205,6 @@ function setPollutionData(cityPollutionData) {
     Main Pollutant for China AQI: ${pollution.maincn}
     <br>
   `
-
   document.querySelector("#pollution-data").insertAdjacentHTML('beforeend', pollutionTagHTML)
 
 }
