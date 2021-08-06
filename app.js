@@ -232,7 +232,6 @@ function setPollutionData(cityPollutionData) {
   }
 
   document.querySelector("#pollution-data").insertAdjacentHTML('beforeend', pollutionTagHTML)
-
 }
 
 // remove existing data
