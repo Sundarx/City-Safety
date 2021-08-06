@@ -12,7 +12,6 @@ header{
   background-size: cover;
   width: 100%;
   position: relative;
-  /* font-family */
 }
 
 #title{
@@ -87,7 +86,6 @@ h4{
   font-size: 22px;
   text-align: center;
 }
-
 
 footer {
   position: fixed;

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
   <script defer src="./app.js"></script>
@@ -12,25 +12,30 @@
   <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
   <title>City-Safety</title>
 </head>
+
 <body>
   <header>
     <h1 id="title">City Safety</h1>
   </header>
   <main>
     <form>
-        <select id="select-country">
-          <option disabled selected>Select a Country</option>
-        </select>
-        <select id="select-state">
-          <option disabled selected>Select a State/Region</option>
-        </select>
-        <select id="select-city">
-          <option disabled selected>Select a City</option>
-        </select>
+      <!-- Dropdown menu for Country -->
+      <select id="select-country">
+        <option disabled selected>Select a Country</option>
+      </select>
+      <!-- Dropdown menu for State -->
+      <select id="select-state">
+        <option disabled selected>Select a State/Region</option>
+      </select>
+      <!-- Dropdown menu for City -->
+      <select id="select-city">
+        <option disabled selected>Select a City</option>
+      </select>
       <button>Submit</button>
     </form>
     <h2 id="location"></h2>
-    <div id="weather-pollution-data">
+    <!-- Container for Data -->
+    <div id="weather-pollution-data"> 
       <div id="weather-data">
       </div>
       <div id="weather-icon">
@@ -47,4 +52,5 @@
   <a href="https://www.instagram.com/" class="fa fa-instagram"></a>
   <p class="fa data-reference">Data provided by IQAir</p>
 </footer>
+
 </html>

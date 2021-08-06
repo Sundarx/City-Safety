@@ -12,7 +12,7 @@ getAllCountries()
 // get all supported countries from API
 async function getAllCountries() {
   try {
-    const allCountriesURL = `http://api.airvisual.com/v2/countries?key=${API_KEY}`
+    const allCountriesURL = `https://api.airvisual.com/v2/countries?key=${API_KEY}`
     const response = await axios.get(allCountriesURL)
     const countriesList = response.data.data
 
@@ -48,7 +48,7 @@ function getSelectedCountry(e) {
 // get all supported states from API according to selected country
 async function getAllStates(){
   try {
-    const allStatesURL = `http://api.airvisual.com/v2/states?country=${countryTag.value}&key=${API_KEY}`
+    const allStatesURL = `https://api.airvisual.com/v2/states?country=${countryTag.value}&key=${API_KEY}`
     const response = await axios.get(allStatesURL)
     const statesList = response.data.data
 
@@ -94,7 +94,7 @@ function getSelectedState(e) {
 // get all supported cities from API according to selected state and country
 async function getAllCities(){
   try {
-    const allCitiesURL = `http://api.airvisual.com/v2/cities?state=${stateTag.value}&country=${countryTag.value}&key=${API_KEY}`
+    const allCitiesURL = `https://api.airvisual.com/v2/cities?state=${stateTag.value}&country=${countryTag.value}&key=${API_KEY}`
     const response = await axios.get(allCitiesURL)
     const citiesList = response.data.data
     setCityTags(citiesList)
@@ -141,7 +141,7 @@ function getSelectedCity(e) {
 async function getPollutionData(e){//cityName, stateName, countryName) {
   try {
     e.preventDefault()
-    const pollutionURL = `http://api.airvisual.com/v2/city?city=${cityTag.value}&state=${stateTag.value}&country=${countryTag.value}&key=${API_KEY}`
+    const pollutionURL = `https://api.airvisual.com/v2/city?city=${cityTag.value}&state=${stateTag.value}&country=${countryTag.value}&key=${API_KEY}`
     const response = await axios.get(pollutionURL)
     let cityPollutionData = response.data.data
     setPollutionData(cityPollutionData)
@@ -186,6 +186,7 @@ function setPollutionData(cityPollutionData) {
   weatherIconHTML = `<img src="https://airvisual.com/images/${weather.ic}.png" class="img-icon">
                      <div id="img-text"><b>${printWeather(weather.ic)}</b></div>
                     `
+  // inside function: this prints the type of weather at the moment
   function printWeather(weather){
     if (weather === "01d") return "clear sky (day)"
     if (weather === "01n") return "clear sky (night)"
@@ -199,7 +200,6 @@ function setPollutionData(cityPollutionData) {
     if (weather === "11d") return "thunderstorm"
     if (weather === "13d") return "snow"
     if (weather === "50d") return "mist"
-
   }
                     
   document.querySelector("#weather-icon").insertAdjacentHTML('beforeend', weatherIconHTML)
@@ -220,7 +220,7 @@ function setPollutionData(cityPollutionData) {
     <b>Main Pollutant for China AQI</b>: ${printPollution(pollution.maincn)}
     <br>
   `
-
+  // inside function: this prints the type of main pollutant
   function printPollution(pollutionType) {
     if (pollutionType === "p2") return "Particulate Matter 2.5"
     if (pollutionType === "p1") return "Particulate Matter 10"
