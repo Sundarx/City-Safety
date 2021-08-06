@@ -1,8 +1,11 @@
 *{
   box-sizing: border-box;
+  font-family: 'Varela Round', sans-serif;
 }
 
 header{
+  position: fixed;
+  top: 0;
   background-image: url("https://i0.wp.com/greenbusinessbureau.com/wp-content/uploads/2021/01/City-Skyline-Header-Blue.jpg?fit=1920%2C680&ssl=1");
   background-size: 100%;
   background-position: top;
@@ -16,15 +19,19 @@ header{
   margin: 00px 0px 0px 0px;
   color: white;
   padding: 120px 0px 120px 0px;
-  font-size: 45px;
-  text-align: center;;
+  font-size: 50px;
+  text-align: center;
+}
+
+body{
+  margin-bottom: 150px;
 }
 
 form{
   display: flex;
-  flex-flow: row nowrap;
-  align-content: space-around;
+  flex-flow: row wrap;
   justify-content: center;
+  align-content: space-around;
   padding: 20px 10px 10px 10px;
 
 }
@@ -33,6 +40,7 @@ form{
   padding: 5px 7px 5px 7px;
   font-size: 17px;
   text-align: center;
+
 }
 
 button{
@@ -43,16 +51,88 @@ button{
   padding: 5px 10px 5px 10px;
 }
 
+button:hover{
+  opacity: 0.7;
+}
+
 #location{
   text-align: center;
 }
 
 #weather-pollution-data{
   display: flex;
+  flex-flow: row wrap;
   justify-content: space-evenly;
   align-content: space-around;
 }
 
-#weather-icon{
-  background-size: cover;
+
+#weather-data, #weather-icon, #pollution-data{
+  font-size: 17px;
+  margin: 10px 10px 10px 10px;
+  padding: 10px 10px 10px 10px;
+}
+
+#img-icon{
+  width: 20%;
+}
+
+#img-text{
+  text-align: center;
+  font-size: 18px;
+  margin: 10px 0 0 0;
+}
+
+h4{
+  font-size: 22px;
+  text-align: center;
+}
+
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(12, 42, 90);
+  color: white;
+  text-align: center;
+}
+
+.fa{
+  position: relative;
+  padding: 19px;
+  width: 50px;
+  height: 50px;
+  text-decoration: none;
+  border-radius: 50%;
+}
+
+.fa:hover {
+  opacity: 0.7;
+}
+
+.fa-facebook {
+  bottom: 5px;
+  background: #3B5998;
+  color: white;
+  margin: 0 auto;
+}
+
+.fa-twitter{
+  bottom: 5px;
+  background: #55ACEE;
+  color: white;
+  margin: 0 auto;
+}
+
+.fa-instagram{
+  bottom: 5px;
+  background: #833AB4;
+  color: white;
+  margin: 0 auto;
+}
+
+#data-reference{
+  color: white;
 }

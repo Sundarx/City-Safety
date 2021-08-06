@@ -1,12 +1,6 @@
 // personal api key
 const API_KEY = `cd2b6222-cf90-4e64-b633-836b11dc5b70`
 
-// const country_domain = `http://api.airvisual.com/v2/countries?key=${API_KEY}`
-// const state_domain = `http://api.airvisual.com/v2/states?country={{COUNTRY_NAME}}&key=${API_KEY}`
-// const city_domain = `http://api.airvisual.com/v2/cities?state={{STATE_NAME}}&country={{COUNTRY_NAME}}&key=${API_KEY}`
-// const output_domain = `http://api.airvisual.com/v2/city?city=Los Angeles&state=California&country=USA&key=${API_KEY}`
-
-
 const form = document.querySelector('form')
 const countryTag = document.querySelector('#select-country')
 const stateTag = document.querySelector('#select-state')
@@ -142,6 +136,8 @@ function getSelectedCity(e) {
   return cityTag.value
 }
 
+
+// get weather/pollution data of city from API
 async function getPollutionData(e){//cityName, stateName, countryName) {
   try {
     e.preventDefault()
@@ -156,37 +152,56 @@ async function getPollutionData(e){//cityName, stateName, countryName) {
 
 }
 
-
+// push data into data containers in HTML
 function setPollutionData(cityPollutionData) {
   removeData()
 
-  document.querySelector("#location").textContent += `
-    Location: ${cityPollutionData.city}, 
-    ${cityPollutionData.state}, 
-    ${cityPollutionData.country}
+  locationHTML = `
+     Location: &nbsp ${cityPollutionData.city}, 
+     ${cityPollutionData.state}, 
+     ${cityPollutionData.country}
   `
+  document.querySelector("#location").insertAdjacentHTML('beforeend', locationHTML)
 
   const weather = cityPollutionData.current.weather
   const weatherTag = document.createElement('p')
   weatherTagHTML = `
     <h4>Weather</h4>
-    Timestamp: ${weather.ts}
+    <b>Timestamp</b>: ${(new Date(weather.ts).getMonth()+1) + '/' + new Date(weather.ts).getDate() + '/' + new Date(weather.ts).getFullYear()}
     <br>
-    Temperature: ${weather.tp} \u00B0C / ${Number(weather.tp)*1.8 + 32} \u00B0F
+    <b>Temperature</b>: ${weather.tp} \u00B0C / ${(Number(weather.tp)*1.8 + 32).toFixed(0)} \u00B0F
     <br>
-    Atmospheric Pressure: ${weather.pr} hPa
+    <b>Atmospheric Pressure</b>: ${weather.pr} hPa
     <br>
-    Humidity: ${weather.hu}%
+    <b>Humidity</b>: ${weather.hu}%
     <br>
-    Wind Speed: ${weather.ws} m/s
+    <b>Wind Speed</b>: ${weather.ws} m/s
     <br>
-    Wind Direction: ${weather.wd}\u00B0
+    <b>Wind Direction</b>: ${weather.wd}\u00B0
     <br>
   `
   document.querySelector("#weather-data").insertAdjacentHTML('beforeend', weatherTagHTML)
 
 
-  weatherIconHTML = `<img src="https://airvisual.com/images/${weather.ic}.png">`
+  weatherIconHTML = `<img src="https://airvisual.com/images/${weather.ic}.png" class="img-icon">
+                     <div id="img-text"><b>${printWeather(weather.ic)}</b></div>
+                    `
+  function printWeather(weather){
+    if (weather === "01d") return "clear sky (day)"
+    if (weather === "01n") return "clear sky (night)"
+    if (weather === "02d") return "few clouds (day)"
+    if (weather === "02n") return "few clouds (night)"
+    if (weather === "03d") return "scattered clouds"
+    if (weather === "04d") return "broken clouds"
+    if (weather === "09d") return "shower rain"
+    if (weather === "10d") return "rain (day time)"
+    if (weather === "10n") return "rain (night time)"
+    if (weather === "11d") return "thunderstorm"
+    if (weather === "13d") return "snow"
+    if (weather === "50d") return "mist"
+
+  }
+                    
   document.querySelector("#weather-icon").insertAdjacentHTML('beforeend', weatherIconHTML)
 
 
@@ -194,27 +209,42 @@ function setPollutionData(cityPollutionData) {
   const pollutionTag = document.createElement('p')
   pollutionTagHTML = `
     <h4>Pollution</h4>
-    Timestamp: ${pollution.ts}
+    <b>Timestamp</b>: ${(new Date(weather.ts).getMonth()+1) + '/' + new Date(weather.ts).getDate() + '/' + new Date(weather.ts).getFullYear()}
     <br>
-    AQI Value (US EPA Std): ${pollution.aqius}
+    <b>AQI Value (US EPA Std)</b>: ${pollution.aqius}
     <br>
-    Main Pollutant for US AQI: ${pollution.mainus}
+    <b>Main Pollutant for US AQI</b>: ${printPollution(pollution.mainus)}
     <br>
-    AQI Value (China EPA Std): ${pollution.aqicn}
+    <b>AQI Value (China EPA Std)</b>: ${pollution.aqicn}
     <br>
-    Main Pollutant for China AQI: ${pollution.maincn}
+    <b>Main Pollutant for China AQI</b>: ${printPollution(pollution.maincn)}
     <br>
   `
+
+  function printPollution(pollutionType) {
+    if (pollutionType === "p2") return "Particulate Matter 2.5"
+    if (pollutionType === "p1") return "Particulate Matter 10"
+    if (pollutionType === "o3") return "Ozone O3"
+    if (pollutionType === "n2") return "Nitrogen Dioxide NO2"
+    if(pollutionType === "s2") return "Sulfur Dioxide SO2"
+    if (pollutionType === "co") return "Carbon Monoxide CO"
+    else return pollutionType
+  }
+
   document.querySelector("#pollution-data").insertAdjacentHTML('beforeend', pollutionTagHTML)
 
 }
 
+// remove existing data
 function removeData() {
   while (document.querySelector("#location").lastChild) {
     document.querySelector("#location").removeChild(document.querySelector("#location").lastChild)
   }
   while (document.querySelector("#weather-data").lastChild) {
     document.querySelector("#weather-data").removeChild(document.querySelector("#weather-data").lastChild)
+  }
+  while (document.querySelector("#weather-icon").lastChild) {
+    document.querySelector("#weather-icon").removeChild(document.querySelector("#weather-icon").lastChild)
   }
   while (document.querySelector("#pollution-data").lastChild) {
     document.querySelector("#pollution-data").removeChild(document.querySelector("#pollution-data").lastChild)
