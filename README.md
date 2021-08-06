@@ -78,12 +78,12 @@ Sample JSON:
 
 |  Day | Deliverable | Status
 |---|---| ---|
-|July 30| Prompt / Wireframes / Priority Matrix / Timeframes | Incomplete
-|August 2| Project Approval / Core Application Structure (HTML, CSS, etc.) | Incomplete
-|August 3| Pseudocode / actual code | Incomplete
-|August 4| Initial Clickable Model  | Incomplete
-|August 5| MVP | Incomplete
-|August 6| Presentations | Incomplete
+|July 30| Prompt / Wireframes / Priority Matrix / Timeframes | Complete
+|August 2| Project Approval / Core Application Structure (HTML, CSS, etc.) | Complete
+|August 3| Pseudocode / actual code | Complete
+|August 4| Initial Clickable Model  | Complete
+|August 5| MVP | Complete
+|August 6| Presentations | Complete
 
 ## Priority Matrix
 
@@ -94,21 +94,19 @@ Sample JSON:
 
 | Component | Priority | Estimated Time | Time Invested | Actual Time |
 | --- | :---: |  :---: | :---: | :---: |
-| HTML Webpage Structure | H | 1.5 hr | 3.5hrs | 3.5hrs |
-| Working with API | H | 4 hrs| 3.5hrs | 3.5hrs |
-| Working on webpage design | H | 4 hrs| 3.5hrs | 3.5hrs |
-| Total | H | 9.5 hrs| 5hrs | 5hrs |
+| HTML Webpage Structure | H | 1.5 hr | 1 hr | 1 hr |
+| Working with API | H | 4 hrs| 5 hrs | 5 hrs |
+| Working on webpage design | H | 4 hrs| 6 hrs | 6 hrs |
+| Total | H | 9.5 hrs| 12 hrs | 12 hrs |
 
 
-## Code Snippet
+## Code Snippet 
 
-Use this section to include a brief code snippet of functionality that you are proud of and a brief description.  
+```    
+const pollutionURL = `https://api.airvisual.com/v2/city?city=${cityTag.value}&state=${stateTag.value}&country=${countryTag.value}&key=${API_KEY}`
 
+// used the user input for country, state, and city to request the respective data from the AQI
 ```
-function reverse(string) {
-	// here is the code to reverse a string of text
-}
-```
+
 
 ## Change Log
- Use this section to document what changes were made and the reasoning behind those changes.  
